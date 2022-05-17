@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Text, SafeAreaView, View, ImageBackground, Animated, Dimensions, Easing, Image } from 'react-native';
+import { Text, SafeAreaView, View, ImageBackground, Animated, Dimensions, Easing, Image, TouchableOpacity } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 
 export default function App() {
@@ -95,10 +95,16 @@ export default function App() {
             },
             moveValue.getLayout(),
           ]}
-        >
+        > 
+        <TouchableOpacity onPress={() => {
+          console.log('You tapped the button!')
+        }}>
+               
+         
           <Image source={{
             uri: image,
           }} style={tw.style('w-full h-full')} />
+            </TouchableOpacity>
         </Animated.View>
       </ImageBackground>
     </SafeAreaView>

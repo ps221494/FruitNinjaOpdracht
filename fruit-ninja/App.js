@@ -10,7 +10,7 @@ export default function App() {
   const spinValue = new Animated.Value(0);
 
   const [height, setHeight] = React.useState(Dimensions.get('window').height * 0.25);
-  const [image, setImage] = React.useState('https://i.pinimg.com/originals/4a/bb/5a/4abb5afb6d042b709dfb53ea108d52a2.png');
+  const [image, setImage] = React.useState(require(`./assets/4.png`));
 
   let images = ['https://i.pinimg.com/originals/4a/bb/5a/4abb5afb6d042b709dfb53ea108d52a2.png', 'https://freepikpsd.com/file/2019/10/banana-cartoon-png-Images-PNG-Transparent.png']
 
@@ -23,10 +23,23 @@ export default function App() {
     return Math.floor(Math.random() * (Dimensions.get('window').width - 70));
   }
 
+  
+  generateImage = () => {
+    const randomImages =[
+      require('./assets/1.png'),
+      require('./assets/2.png'),
+      require('./assets/3.png'),
+      require('./assets/4.png'),
+      require('./assets/5.png'),
+      require('./assets/6.png'),
+    ];
+    const randomImage = Math.floor(Math.random() * 6) + 1;
+    setImage(require(`./assets/2.png`));
+  }
+
   useEffect(() => {
     function cycleAnimation() {
       let width = getRandomWidth();
-      console.log(width)
       Animated.sequence([
         Animated.timing(moveValue, {
           toValue: { x: getRandomWidth(), y: Dimensions.get('window').height + 70 },
@@ -72,13 +85,14 @@ export default function App() {
       });
     }
 
-    function generateImage() {
-      let randomNumber = Math.floor(Math.random() * images.length);
-      setImage(images[randomNumber]);
+     ClickedObject = () => {
+console.log("PASCAL IS EEN GOEIE JONGE")
+moveValue.setValue({ x: getRandomWidth(), y: Dimensions.get('window').height + 70 });
     }
 
     cycleRotation();
     cycleAnimation();
+    generateImage();
   }, []);
 
   return (
@@ -96,14 +110,12 @@ export default function App() {
             moveValue.getLayout(),
           ]}
         > 
-        <TouchableOpacity onPress={() => {
-          console.log('You tapped the button!')
-        }}>
+        <TouchableOpacity onPress={() =>          
+          ClickedObject()
+        }>
                
          
-          <Image source={{
-            uri: image,
-          }} style={tw.style('w-full h-full')} />
+          <Image source={image} style={tw.style('w-full h-full')} />
             </TouchableOpacity>
         </Animated.View>
       </ImageBackground>

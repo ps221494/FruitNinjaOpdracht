@@ -10,7 +10,12 @@ export default function App() {
   const spinValue = new Animated.Value(0);
 
   const [height, setHeight] = React.useState(Dimensions.get('window').height * 0.25);
-  const [image, setImage] = React.useState(require(`./assets/4.png`));
+  const [image, setImage] = React.useState( require('./assets/1.png'),
+  require('./assets/2.png'),
+  require('./assets/3.png'),
+  require('./assets/4.png'),
+  require('./assets/5.png'),
+  require('./assets/6.png'),);
 
   let images = ['https://i.pinimg.com/originals/4a/bb/5a/4abb5afb6d042b709dfb53ea108d52a2.png', 'https://freepikpsd.com/file/2019/10/banana-cartoon-png-Images-PNG-Transparent.png']
 
@@ -25,6 +30,13 @@ export default function App() {
 
   
   generateImage = () => {
+   
+
+  //  if (Numb == 1) {
+  //    Numb = 2;
+  //  } else {
+  //    Numb = 1;
+  //  }
     const randomImages =[
       require('./assets/1.png'),
       require('./assets/2.png'),
@@ -34,7 +46,8 @@ export default function App() {
       require('./assets/6.png'),
     ];
     const randomImage = Math.floor(Math.random() * 6) + 1;
-    setImage(require(`./assets/2.png`));
+  let Numb = randomImage;
+    setImage(randomImage);
   }
 
   useEffect(() => {
@@ -86,13 +99,15 @@ export default function App() {
     }
 
      ClickedObject = () => {
+     
 console.log("PASCAL IS EEN GOEIE JONGE")
 moveValue.setValue({ x: getRandomWidth(), y: Dimensions.get('window').height + 70 });
+generateImage();
     }
 
     cycleRotation();
     cycleAnimation();
-    generateImage();
+    
   }, []);
 
   return (

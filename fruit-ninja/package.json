@@ -17,7 +17,8 @@
     "react-native": "0.68.1",
     "react-native-background-audio": "^1.1.4",
     "react-native-web": "0.17.7",
-    "tailwind-react-native-classnames": "^1.5.1"
+    "tailwind-react-native-classnames": "^1.5.1",
+    "expo-updates": "~0.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

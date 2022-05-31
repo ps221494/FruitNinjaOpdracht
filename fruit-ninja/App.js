@@ -9,18 +9,17 @@ export default function App() {
     y: Dimensions.get('window').height + 70
   })).current;
   const spinValue = new Animated.Value(0);
-  const [Punten, SetPunten] = React.useState(0);
- 
+  const [points, setPoints] = React.useState(0);
 
   const [height, setHeight] = React.useState(Dimensions.get('window').height * 0.25);
 
   //images that are used in the game
-  const [image, setImage] = React.useState( require('./assets/1.png'),
-  require('./assets/2.png'),
-  require('./assets/3.png'),
-  require('./assets/4.png'),
-  require('./assets/5.png'),
-  require('./assets/6.png'),);
+  const [image, setImage] = React.useState(require('./assets/1.png'),
+    require('./assets/2.png'),
+    require('./assets/3.png'),
+    require('./assets/4.png'),
+    require('./assets/5.png'),
+    require('./assets/6.png'),);
 
   let images = ['https://i.pinimg.com/originals/4a/bb/5a/4abb5afb6d042b709dfb53ea108d52a2.png', 'https://freepikpsd.com/file/2019/10/banana-cartoon-png-Images-PNG-Transparent.png']
 
@@ -34,19 +33,18 @@ export default function App() {
   }
 
   const [audio_options, SetAudio] = React.useState(
-   require('./assets/slashSFX.mp3')
+    require('./assets/slashSFX.mp3')
   );
-  
+
   // function that changes the image to a random image onclick
   generateImage = () => {
     const randomImage = Math.floor(Math.random() * 6) + 1;
-  let Numb = randomImage;
+    let Numb = randomImage;
     setImage(randomImage);
   }
 
   useEffect(() => {
     function cycleAnimation() {
-      let width = getRandomWidth();
       Animated.sequence([
         Animated.timing(moveValue, {
           toValue: { x: getRandomWidth(), y: Dimensions.get('window').height + 70 },
@@ -64,6 +62,9 @@ export default function App() {
         })
       ]).start(() => {
         cycleAnimation();
+        setTimeout(() => {
+          generateImage();
+        }, 1000);
       });
     }
 
@@ -92,25 +93,22 @@ export default function App() {
       });
     }
 
-     ClickedObject = () => {
-       // adds 1 to the score
-       SetPunten(Punten + 1);
-      console.log(Punten);
-      // the moveValue makes sure that the object is moving downwards
-moveValue.setValue({ x: getRandomWidth(), y: Dimensions.get('window').height + 70 });
-generateImage();
-
+    ClickedObject = () => {
+      // adds 1 to the score
+      setTimeout(() => {
+        generateImage();
+      }, 1000);
     }
 
     cycleRotation();
     cycleAnimation();
-    
+
   }, []);
 
   return (
     <SafeAreaView style={tw.style('flex-1 bg-black')}>
       <ImageBackground source={require('./assets/background.jpg')} resizeMode="cover" style={tw.style('opacity-90 w-full h-full')}>
-        <Text style={tw.style('text-red-500 text-xl')}>Score  {Punten}</Text>
+        <Text style={tw.style('text-white text-xl font-bold mt-10 ml-5')}>Score: {points}</Text>
         <Animated.View
           style={[
             {
@@ -121,14 +119,16 @@ generateImage();
             },
             moveValue.getLayout(),
           ]}
-        > 
-        <TouchableOpacity onPress={() =>          
-          ClickedObject()
-        }>
-               
-         
-          <Image source={image} style={tw.style('w-full h-full')} />
-            </TouchableOpacity>
+        >
+          <TouchableOpacity onPress={() => {
+            ClickedObject()
+            setPoints(points + 1)
+          }
+          }>
+
+
+            <Image source={image} style={tw.style('')} />
+          </TouchableOpacity>
         </Animated.View>
       </ImageBackground>
     </SafeAreaView>

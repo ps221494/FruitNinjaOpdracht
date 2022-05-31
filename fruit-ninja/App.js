@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Text, SafeAreaView, View, ImageBackground, Animated, Dimensions, Easing, Image, TouchableOpacity } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
+import BgAudio from 'react-native-background-audio'
 
 export default function App() {
   const moveValue = useRef(new Animated.ValueXY({
@@ -8,8 +9,12 @@ export default function App() {
     y: Dimensions.get('window').height + 70
   })).current;
   const spinValue = new Animated.Value(0);
+  const [Punten, SetPunten] = React.useState(0);
+ 
 
   const [height, setHeight] = React.useState(Dimensions.get('window').height * 0.25);
+
+  //images that are used in the game
   const [image, setImage] = React.useState( require('./assets/1.png'),
   require('./assets/2.png'),
   require('./assets/3.png'),
@@ -28,23 +33,12 @@ export default function App() {
     return Math.floor(Math.random() * (Dimensions.get('window').width - 70));
   }
 
+  const [audio_options, SetAudio] = React.useState(
+   require('./assets/slashSFX.mp3')
+  );
   
+  // function that changes the image to a random image onclick
   generateImage = () => {
-   
-
-  //  if (Numb == 1) {
-  //    Numb = 2;
-  //  } else {
-  //    Numb = 1;
-  //  }
-    const randomImages =[
-      require('./assets/1.png'),
-      require('./assets/2.png'),
-      require('./assets/3.png'),
-      require('./assets/4.png'),
-      require('./assets/5.png'),
-      require('./assets/6.png'),
-    ];
     const randomImage = Math.floor(Math.random() * 6) + 1;
   let Numb = randomImage;
     setImage(randomImage);
@@ -99,10 +93,13 @@ export default function App() {
     }
 
      ClickedObject = () => {
-     
-console.log("PASCAL IS EEN GOEIE JONGE")
+       // adds 1 to the score
+       SetPunten(Punten + 1);
+      console.log(Punten);
+      // the moveValue makes sure that the object is moving downwards
 moveValue.setValue({ x: getRandomWidth(), y: Dimensions.get('window').height + 70 });
 generateImage();
+
     }
 
     cycleRotation();
@@ -113,7 +110,7 @@ generateImage();
   return (
     <SafeAreaView style={tw.style('flex-1 bg-black')}>
       <ImageBackground source={require('./assets/background.jpg')} resizeMode="cover" style={tw.style('opacity-90 w-full h-full')}>
-        <Text style={tw.style('text-red-500 text-xl')}>Hello</Text>
+        <Text style={tw.style('text-red-500 text-xl')}>Score  {Punten}</Text>
         <Animated.View
           style={[
             {
